@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "501671629544",
+    "project_id": "daab-db",
+    "storage_bucket": "daab-db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501671629544:android:e0bba0db0336f2c53f2f5d",
+        "android_client_info": {
+          "package_name": "com.rawan.daab"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "501671629544-fu4pad9p268q0p4ha6fistj2harbhk87.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9AHDuFoNRwrJnmI6tJFcYA2b61sbzfZI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "501671629544-fu4pad9p268q0p4ha6fistj2harbhk87.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
