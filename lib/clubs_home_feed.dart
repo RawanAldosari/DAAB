@@ -31,7 +31,7 @@ class c_feed extends StatefulWidget {
 class cHomeFeed extends State<c_feed> with SingleTickerProviderStateMixin {
   User? user = FirebaseAuth.instance.currentUser;
   TabController? _tabController;
-  final colorstheme = colors.second;
+  final colorstheme = colors.main;
   @override
   void initState() {
     _tabController = new TabController(length: 2, vsync: this, initialIndex: 1)
@@ -84,68 +84,61 @@ class cHomeFeed extends State<c_feed> with SingleTickerProviderStateMixin {
                       'طلبات النادي',
                       style: TextStyle(
                           fontFamily: "Tajawal",
-                          color: const Color(0xff334856)),
+                          color: Colors.white),
                     ),
                     Text(
                       'فعاليات',
                       style: TextStyle(
                           fontFamily: "Tajawal",
-                          color: const Color(0xff334856)),
+                          color:  Colors.white),
                     ),
                   ]),
             ),
           ),
-          Center(
-            child:
-              Expanded(
-                child: TabBarView(
-                  controller: _tabController,
-                  children: [
-                    StreamBuilder(
-                        stream: requests,
-                        builder: (context, snapshot) {
-                          if (!snapshot.hasData) return Container(
-                              child: Text("hiiiiii")
-                          );
-                          return Expanded(
-                            child: ListView.builder(
-                              shrinkWrap: false,
-                              physics: ScrollPhysics(),
-                              itemCount:
-                              (snapshot.data! as QuerySnapshot).docs.length,
-                              itemBuilder: (BuildContext context, int index) =>
-                                  buildItemsCards(
-                                    context,
-                                    (snapshot.data! as QuerySnapshot).docs[index],
-                                    user?.uid.toString(),
-                                  ),
-                            ),
-                          );
-                        }),
-                    StreamBuilder(
-                        stream: events,
-                        builder: (context, snapshot) {
-                          if (!snapshot.hasData) return Container(
-                            child: Text("hi")
-                          );
-                          return Expanded(
-                            child: ListView.builder(
-                              shrinkWrap: false,
-                              physics: ScrollPhysics(),
-                              itemCount:
-                              (snapshot.data! as QuerySnapshot).docs.length,
-                              itemBuilder: (BuildContext context, int index) =>
-                                  buildEventsCards(
-                                      context,
-                                      (snapshot.data! as QuerySnapshot).docs[index],
-                                      user?.uid.toString()),
-                            ),
-                          );
-                        }),
-                  ],
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                StreamBuilder(
+                    stream: requests,
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) return _buildWaitingScreen();
+                      return Expanded(
+                        child: ListView.builder(
+                          shrinkWrap: false,
+                          physics: ScrollPhysics(),
+                          itemCount:
+                          (snapshot.data! as QuerySnapshot).docs.length,
+                          itemBuilder: (BuildContext context, int index) =>
+                              buildItemsCards(
+                                context,
+                                (snapshot.data! as QuerySnapshot).docs[index],
+                                user?.uid.toString(),
+                              ),
+                        ),
+                      );
+                    }),
+                StreamBuilder(
+                    stream: events,
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) return _buildWaitingScreen();
+                      return Expanded(
+                        child: ListView.builder(
+                          shrinkWrap: false,
+                          physics: ScrollPhysics(),
+                          itemCount:
+                          (snapshot.data! as QuerySnapshot).docs.length,
+                          itemBuilder: (BuildContext context, int index) =>
+                              buildEventsCards(
+                                  context,
+                                  (snapshot.data! as QuerySnapshot).docs[index],
+                                  user?.uid.toString()),
+                        ),
+                      );
+                    }),
+              ],
 
-                ),
-              )
+            ),
           )
         ],
       ),
@@ -392,46 +385,70 @@ class cHomeFeed extends State<c_feed> with SingleTickerProviderStateMixin {
                       ),
                     ]),
                   ),
-                if (document['participants'].toString() == '0')
-                  Padding(
+                GestureDetector(
+                  onTap: () async {
+                    // DonationsViewModel dnm = DonationsViewModel();
+                    // dnm.setdocID = document.id.toString();
+                    // // String docID = document.id.toString();
+                    // Navigator.of(context).push(CustomPageRoute(
+                    //     child: ViewItemDonations(document: document)));
+                  },
+                  child: Padding(
                     padding: const EdgeInsets.only(
-                        top: 5.0, bottom: 5.0, left: 2, right: 10),
-                    child: Row(children: <Widget>[
-                      Container(
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                                color: Color(0xffededed),
-                                spreadRadius: 1,
-                                blurRadius: 10),
-                          ],
-                        ),
-                        height: 30,
-                        width: 75,
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            // Navigator.of(context).push(MaterialPageRoute(
-                            //     builder: (context) =>
-                            //         EditRequest(document: document)));
-                          },
-                          child: Text(
-                            "تعديل",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontFamily: 'Tajawal',
-                                color: const Color(0xff334856)),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: Size(65.w, 30.h),
-                            primary: const Color(0xdeedd03c),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                          ),
-                        ),
-                      )
+                        top: 0.1, bottom: 10.0, right: 70),
+                    child: Row(children: const <Widget>[
+                      Spacer(),
+                      Text(
+                        " عرض المشتركين",
+                        style: TextStyle(
+                            fontFamily: 'Tajawal',
+                            decoration: TextDecoration.underline,
+                            color: colors.second),
+                      ),
                     ]),
                   ),
+                ),
+
+                // if (document['participants'].toString() == '0')
+                //   Padding(
+                //     padding: const EdgeInsets.only(
+                //         top: 5.0, bottom: 5.0, left: 2, right: 10),
+                //     child: Row(children: <Widget>[
+                //       Container(
+                //         decoration: BoxDecoration(
+                //           boxShadow: [
+                //             BoxShadow(
+                //                 color: Color(0xffededed),
+                //                 spreadRadius: 1,
+                //                 blurRadius: 10),
+                //           ],
+                //         ),
+                //         height: 30,
+                //         width: 75,
+                //         child: ElevatedButton(
+                //           onPressed: () async {
+                //             // Navigator.of(context).push(MaterialPageRoute(
+                //             //     builder: (context) =>
+                //             //         EditRequest(document: document)));
+                //           },
+                //           child: Text(
+                //             "تعديل",
+                //             textAlign: TextAlign.center,
+                //             style: TextStyle(
+                //                 fontFamily: 'Tajawal',
+                //                 color: const Color(0xff334856)),
+                //           ),
+                //           style: ElevatedButton.styleFrom(
+                //             minimumSize: Size(65.w, 30.h),
+                //             primary: const Color(0xdeedd03c),
+                //             shape: RoundedRectangleBorder(
+                //               borderRadius: BorderRadius.circular(50),
+                //             ),
+                //           ),
+                //         ),
+                //       )
+                //     ]),
+                //   ),
                 // if (document['participants'].toString() != '0')
                 //   Padding(
                 //     padding: const EdgeInsets.only(

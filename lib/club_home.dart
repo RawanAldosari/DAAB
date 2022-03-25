@@ -47,7 +47,7 @@ class _HomeState extends State<cHome> {
             _title,
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Color(0xff334856),
+              color: colors.main,
               fontWeight: FontWeight.w700,
               fontFamily: 'Tajawal',
               fontSize: 24,
@@ -60,7 +60,7 @@ class _HomeState extends State<cHome> {
               child: IconButton(
                 icon: Icon(
                   Icons.logout,
-                  color: Color(0xff334856),
+                  color: colors.main,
                 ),
                 onPressed: () async {
                   showDialog(
@@ -144,9 +144,9 @@ class _HomeState extends State<cHome> {
             )
           ],
           // automaticallyImplyLeading: false,
-          backgroundColor: const Color(0xdeedd03c),
-          bottomOpacity: 30,
-          elevation: 1,
+          backgroundColor: Colors.transparent,
+          // bottomOpacity: 30,
+          elevation: 0,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(
               bottom: Radius.circular(50),
