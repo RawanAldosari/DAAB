@@ -181,8 +181,8 @@ class _HomeState extends State<cHome> {
             child: BottomNavigationBar(
                 backgroundColor: Colors.white,
                 iconSize: 30,
-                selectedItemColor: const Color(0xdeedd03c),
-                unselectedItemColor: const Color(0xff334856),
+                selectedItemColor: colors.main,
+                unselectedItemColor: colors.darkText,
                 selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
                 showSelectedLabels: false,
                 showUnselectedLabels: false,
@@ -190,12 +190,12 @@ class _HomeState extends State<cHome> {
                 currentIndex: _currentIndex,
                 items: [
                   BottomNavigationBarItem(
-                    icon: new Icon(Icons.person),
-                    label: "الملف الشخصي",
+                    icon: new Icon(Icons.group),
+                    label: "هيكلة النادي",
                   ),
                   BottomNavigationBarItem(
                     icon: new Icon(Icons.add),
-                    label: "إضافة طلب",
+                    label: "إضافة إعلان",
                   ),
                   BottomNavigationBarItem(
                     icon: new Icon(Icons.home),
@@ -213,12 +213,12 @@ class _HomeState extends State<cHome> {
       switch (index) {
         case 0:
           {
-            _title = 'ملف المسجد';
+            _title = 'هيكلة النادي';
           }
           break;
         case 1:
           {
-            _title = 'إضافة طلب';
+            _title = 'إضافة إعلان';
           }
           break;
         case 2:
