@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:daab/Colors.dart';
 import 'package:daab/student_home_view.dart';
 import 'package:daab/users_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'club_home.dart';
 import 'student_home.dart';
 
 // import 'package:swe444/Functions/home_screen/mm_home_view.dart';
@@ -52,10 +54,10 @@ class _DecisionsTreeState extends State<DecisionsTree> {
         if (doc.exists) {
           Map<String, dynamic>? data = doc.data();
           if (data!['role'] == 'club') {
-            // Navigator.of(context)
-            //     .push(new MaterialPageRoute(builder: (context) =>
-            //     cHome()
-            // ));
+            Navigator.of(context)
+                .push(new MaterialPageRoute(builder: (context) =>
+                cHome()
+            ));
           } else if (data['role'] == 'student') {
             Navigator.of(context)
                 .push(MaterialPageRoute(builder: (context) => new
@@ -78,7 +80,7 @@ class _DecisionsTreeState extends State<DecisionsTree> {
       body: Container(
         alignment: Alignment.center,
         child: CircularProgressIndicator(
-          color: const Color(0xdeedd03c),
+          color: colors.second,
         ),
       ),
     );

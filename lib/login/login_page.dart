@@ -363,7 +363,7 @@ class _LoginPageState extends State<LoginPage> {
                                 style: TextStyle(
                                     fontSize: 20.0,
                                     fontFamily: 'Tajawal',
-                                    color: Color(0xff334856),
+                                    color: Colors.white,
                                     fontWeight: FontWeight.w700),
                                 textAlign: TextAlign.center,
                               )),
