@@ -12,27 +12,27 @@ import 'dart:ui' as ui;
 
 import '../CustomPageRoute.dart';
 
-class eventsFeed extends StatelessWidget {
+class calender extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<FeedViewModel>(
         create: (_) => FeedViewModel(),
-        child: Container(height: 1200, width: 450, child: events_feed()));
+        child: Container(height: 1200, width: 450, child: calender_view()));
   }
 }
 
-class events_feed extends StatefulWidget {
-  const events_feed({
+class calender_view extends StatefulWidget {
+  const calender_view({
     Key? key,
   }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return eFeed();
+    return cView();
   }
 }
 
-class eFeed extends State<events_feed> {
+class cView extends State<calender_view> {
   @override
   void initState() {
     super.initState();
@@ -44,13 +44,13 @@ class eFeed extends State<events_feed> {
   }
 
   setup() async {
-    await Provider.of<FeedViewModel>(context, listen: false).fetchEvents();
+    await Provider.of<FeedViewModel>(context, listen: false).fetchRequests();
   }
 
   @override
   Widget build(BuildContext context) {
     Stream<QuerySnapshot<Map<String, dynamic>>>? requests =
-        Provider.of<FeedViewModel>(context, listen: false).events;
+        Provider.of<FeedViewModel>(context, listen: false).requests;
     return Scaffold(
       backgroundColor: const Color(0xffededed),
       appBar: AppBar(
@@ -73,7 +73,7 @@ class eFeed extends State<events_feed> {
           ),
         ],
         title: Text(
-          "الفعالبات",
+          "الأندية الطلابية",
           textAlign: TextAlign.center,
           style: TextStyle(
             color: colors.main,
@@ -150,7 +150,7 @@ class eFeed extends State<events_feed> {
                       padding: const EdgeInsets.only(left: 10),
                       child: FittedBox(
                         fit: BoxFit.fill,
-                        child: Icon(Icons.event,
+                        child: Icon(Icons.group,
                           size: 40,
                           color: colors.darkText,),
                       )
@@ -193,110 +193,98 @@ class eFeed extends State<events_feed> {
                         child: Padding(
                           padding: const EdgeInsets.only(top: 10),
                           child: Text(
-                            'الرعاة: ' + document['sponsor'].toString(),
+                            'المدة: ' + document['duration'].toString(),
                             style: TextStyle(fontFamily: 'Tajawal'),
                             textDirection: ui.TextDirection
                                 .rtl, // make the text from right to left
                           ),
                         ),
                       ),
-                      Container(
-                        width: 250, // to wrap the text in multiline
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: Text(
-                            'المدة: ' + document['days'].toString(),
-                            style: TextStyle(fontFamily: 'Tajawal'),
-                            textDirection: ui.TextDirection
-                                .rtl, // make the text from right to left
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 250, // to wrap the text in multiline
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: Text(
-                            'يبدأ في تمام الساعة ' +
-                                document['start_time'].toString() +
-                                " وينتهي " +
-                                document['end_time'].toString(),
-                            style: TextStyle(fontFamily: 'Tajawal'),
-                            textDirection: ui.TextDirection
-                                .rtl, // make the text from right to left
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 250, // to wrap the text in multiline
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: Directionality(
-                            textDirection: ui.TextDirection
-                                .rtl, // make the text from right to left,
-                            child: Text(
-                              'عدد المنظمين المطلوب: ' +
-                                  document['parts_number'].toString(),
-                              style: TextStyle(fontFamily: 'Tajawal'),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 250, // to wrap the text in multiline
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: Text(
-                            "عدد المشاركين: ",
-                            style: TextStyle(fontFamily: 'Tajawal'),
-                            textDirection: ui.TextDirection.rtl,
-                          ),
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 14.0),
-                            child: Text(document['participants'].toString(),
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                    fontFamily: 'Tajawal', fontSize: 13)),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 10.0, left: 5, right: 5),
-                            child: SizedBox(
-                              width: 200,
-                              height: 10,
-                              child: Stack(
-                                fit: StackFit.expand,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(50),
-                                    child: LinearProgressIndicator(
-                                      value: (document['participants'] /
-                                          document['parts_number']),
-                                      valueColor: AlwaysStoppedAnimation(
-                                          colors.main),
-                                      backgroundColor: Color(0xffededed),
-                                    ),
-                                  ),
-                                  // Center(
-                                  //     child: buildLinearProgress(
-                                  //         (document['participants'] /
-                                  //             document['parts_number']))),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 14.0),
-                            child: Text(document['parts_number'].toString(),
-                                style: TextStyle(
-                                    fontFamily: 'Tajawal', fontSize: 13)),
-                          ),
-                        ],
-                      ),
+                      // Container(
+                      //   width: 250, // to wrap the text in multiline
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.only(top: 10),
+                      //     child: Text(
+                      //       'يبدأ في تمام الساعة ' +
+                      //           document['start_time'].toString() +
+                      //           " وينتهي " +
+                      //           document['end_time'].toString(),
+                      //       style: TextStyle(fontFamily: 'Tajawal'),
+                      //       textDirection: ui.TextDirection
+                      //           .rtl, // make the text from right to left
+                      //     ),
+                      //   ),
+                      // ),
+                      // Container(
+                      //   width: 250, // to wrap the text in multiline
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.only(top: 10),
+                      //     child: Directionality(
+                      //       textDirection: ui.TextDirection
+                      //           .rtl, // make the text from right to left,
+                      //       child: Text(
+                      //         'عدد المنظمين المطلوب: ' +
+                      //             document['parts_number'].toString(),
+                      //         style: TextStyle(fontFamily: 'Tajawal'),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      // Container(
+                      //   width: 250, // to wrap the text in multiline
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.only(top: 10),
+                      //     child: Text(
+                      //       "عدد المشاركين: ",
+                      //       style: TextStyle(fontFamily: 'Tajawal'),
+                      //       textDirection: ui.TextDirection.rtl,
+                      //     ),
+                      //   ),
+                      // ),
+                      // Row(
+                      //   children: [
+                      //     Padding(
+                      //       padding: const EdgeInsets.only(top: 14.0),
+                      //       child: Text(document['participants'].toString(),
+                      //           textAlign: TextAlign.right,
+                      //           style: TextStyle(
+                      //               fontFamily: 'Tajawal', fontSize: 13)),
+                      //     ),
+                      //     // Padding(
+                      //     //   padding: const EdgeInsets.only(
+                      //     //       top: 10.0, left: 5, right: 5),
+                      //     //   child: SizedBox(
+                      //     //     width: 200,
+                      //     //     height: 10,
+                      //     //     child: Stack(
+                      //     //       fit: StackFit.expand,
+                      //     //       children: [
+                      //     //         ClipRRect(
+                      //     //           borderRadius: BorderRadius.circular(50),
+                      //     //           child: LinearProgressIndicator(
+                      //     //             value: (document['participants'] /
+                      //     //                 document['parts_number']),
+                      //     //             valueColor: AlwaysStoppedAnimation(
+                      //     //                 Color(0xdeedd03c)),
+                      //     //             backgroundColor: Color(0xffededed),
+                      //     //           ),
+                      //     //         ),
+                      //     //         // Center(
+                      //     //         //     child: buildLinearProgress(
+                      //     //         //         (document['participants'] /
+                      //     //         //             document['parts_number']))),
+                      //     //       ],
+                      //     //     ),
+                      //     //   ),
+                      //     // ),
+                      //     // Padding(
+                      //     //   padding: const EdgeInsets.only(top: 14.0),
+                      //     //   child: Text(document['parts_number'].toString(),
+                      //     //       style: TextStyle(
+                      //     //           fontFamily: 'Tajawal', fontSize: 13)),
+                      //     // ),
+                      //   ],
+                      // ),
                     ],
                   ),
                 ]),
@@ -324,7 +312,7 @@ class eFeed extends State<events_feed> {
                         // String mmId = document['posted_by'].toString();
                         String thisDocId = document.id;
                         String title = document['title'];
-                        showAlertDialog2(context);
+
                         // await apply(name, mmId, wholePartsNum!,
                         //     currentPartsNum!, thisDocId, title);
                       },
@@ -463,57 +451,6 @@ class eFeed extends State<events_feed> {
       content: Text(
         response!
         // feedbackResponse(response)!
-        ,
-        textAlign: TextAlign.right,
-        style: TextStyle(fontFamily: "Tajawal", height: 1.5),
-      ),
-      actions: [
-        okButton,
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
-
-  showAlertDialog2(BuildContext context) {
-    // set up the button
-    Widget okButton = Padding(
-        padding: EdgeInsets.only(right: 20.w, bottom: 10.h),
-        child: TextButton(
-          child: Text(
-            "موافق",
-            textAlign: TextAlign.right,
-            style: TextStyle(fontFamily: "Tajawal", color: Colors.white),
-          ),
-          style: ButtonStyle(
-              backgroundColor:
-              MaterialStateProperty.all<Color>( colors.main)),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ));
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(32.0))),
-      contentPadding:
-      EdgeInsets.only(right: 20.w, top: 20.h, bottom: 10.h, left: 10.w),
-      title: Text(
-        "تأكيد عملية التقديم ",
-        textAlign: TextAlign.right,
-        style: TextStyle(
-          fontFamily: "Tajawal",
-          color: colors.main,
-        ),
-      ),
-      content: Text(
-        "تم إسال طلب الاشتراك بنجاح"
         ,
         textAlign: TextAlign.right,
         style: TextStyle(fontFamily: "Tajawal", height: 1.5),

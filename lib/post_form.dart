@@ -30,6 +30,8 @@ class _AddRequestFormState extends State<PostRequestForm> {
   DateTime time = DateTime.now();
   int charLength = 0;
   int charLength2 = 0;
+  int charLength3 = 0;
+
   final List<String> items = <String>['فعالية', 'متطلبات النادي'];
 
 
@@ -40,6 +42,8 @@ class _AddRequestFormState extends State<PostRequestForm> {
   TextEditingController _date = TextEditingController();
   TextEditingController _startTime = TextEditingController();
   TextEditingController _endTime = TextEditingController();
+  TextEditingController sponsor = TextEditingController();
+
 
   DateTime? startDate, endDate;
   TimeOfDay? startTime, endTime;
@@ -415,6 +419,69 @@ class _AddRequestFormState extends State<PostRequestForm> {
   // }
 
   /// events
+  Widget _buildSponsor() {
+    return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      maxLines: 1,
+      maxLength: 30,
+      validator: (value) {
+        if (value == null || value.isEmpty || value.trim().isEmpty)
+          return "مطلوب";
+        if (!RegExp(r"^[\p{L} ,.'-]*$",
+            caseSensitive: false, unicode: true, dotAll: true)
+            .hasMatch(value)) return "يجب أن يحتوي على أحرف فقط";
+        if (value.length > 30) return "لا يمكن ان يزيد عن 30 حرف ";
+      },
+      controller: sponsor,
+      onSaved: (_val) {
+        if (_val != null) sponsor.text = _val;
+      },
+      onChanged: (value) {
+        setState(
+              () {
+            charLength3 = value.length;
+          },
+        );
+      },
+      showCursor: true,
+      cursorColor: colors.main,
+      style: TextStyle(fontSize: 16, color: const Color(0xff334856)),
+      textAlign: TextAlign.right,
+      decoration: InputDecoration(
+        // counterText: '${_enteredText.length.toString()}character(s)',
+        contentPadding: EdgeInsets.only(right: 20, top: 15),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+        focusedBorder: OutlineInputBorder(
+          // width: 0.0 produces a thin "hairline" border
+          borderRadius: BorderRadius.circular(30),
+          borderSide: BorderSide(
+            color: colors.main,
+          ),
+        ),
+        prefixStyle: TextStyle(fontSize: 15, color: const Color(0xff334856)),
+        hoverColor: const Color(0xff334856),
+        hintText:
+        'أدخل الراعي للفعالية',
+        labelText:
+        'الراعي *'
+        ,
+        hintStyle: TextStyle(
+            fontSize: 13,
+            color: const Color(0xffcbcbcc),
+            fontFamily: 'Tajawal'),
+        labelStyle: TextStyle(
+            fontSize: 15,
+            color: const Color(0xff334856),
+            fontFamily: 'Tajawal'),
+        alignLabelWithHint: true,
+        //border: OutlineInputBorder(),
+        // hoverColor: const Color(0xff334856),
+      ),
+    );
+  }
+
   Widget _buildNumberOfParticipants() {
     double _value;
     return TextFormField(
@@ -962,7 +1029,14 @@ class _AddRequestFormState extends State<PostRequestForm> {
 
 
             ///---- Event ----///
-            if (type == "فعالية")
+              if (type == "فعالية")
+              Container(
+                  width: portrait == true ? 250.w : 300.w,
+                  child: Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: _buildSponsor(),
+                  )),
+              if (type == "فعالية")
               Container(
                   width: portrait == true ? 250.w : 300.w,
                   child: Directionality(
@@ -1127,6 +1201,7 @@ class _AddRequestFormState extends State<PostRequestForm> {
         requestVM.setEndDate = endDate;
         requestVM.setStartTime = _startTime.text;
         requestVM.setEndTime = _endTime.text;
+        requestVM.sponsor = sponsor.text;
         await requestVM.addEvent();
       }
       else {

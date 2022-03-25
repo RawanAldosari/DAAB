@@ -83,6 +83,8 @@ class Events {
   String? club_name;
   String? club_location;
   DateTime? upload_time;
+  String? sponsor;
+
 
   Events(
       this.number,
@@ -98,6 +100,7 @@ class Events {
       this.club_name,
       this.club_location,
       this.upload_time,
+      this.sponsor,
       );
 
   Map<String, dynamic> toJson() => {
@@ -114,5 +117,6 @@ class Events {
         'end_date': endDate,
         'start_time': startTime,
         'end_time': endTime,
+        'sponsor': sponsor,
       };
 }

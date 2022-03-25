@@ -313,6 +313,8 @@ class cFeed extends State<clubs_feed> {
                           String thisDocId = document.id;
                           String title = document['title'];
 
+                          showAlertDialog2(context);
+
                           // await apply(name, mmId, wholePartsNum!,
                           //     currentPartsNum!, thisDocId, title);
                         },
@@ -469,7 +471,58 @@ class cFeed extends State<clubs_feed> {
     );
   }
 
-  // Future<String> countNumOfRequests(String mmId) async {
+  showAlertDialog2(BuildContext context) {
+    // set up the button
+    Widget okButton = Padding(
+        padding: EdgeInsets.only(right: 20.w, bottom: 10.h),
+        child: TextButton(
+          child: Text(
+            "موافق",
+            textAlign: TextAlign.right,
+            style: TextStyle(fontFamily: "Tajawal", color: Colors.white),
+          ),
+          style: ButtonStyle(
+              backgroundColor:
+              MaterialStateProperty.all<Color>( colors.main)),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ));
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(32.0))),
+      contentPadding:
+      EdgeInsets.only(right: 20.w, top: 20.h, bottom: 10.h, left: 10.w),
+      title: Text(
+        "تأكيد عملية التقديم ",
+        textAlign: TextAlign.right,
+        style: TextStyle(
+          fontFamily: "Tajawal",
+          color: colors.main,
+        ),
+      ),
+      content: Text(
+        "تم إسال طلب الاشتراك بنجاح"
+        ,
+        textAlign: TextAlign.right,
+        style: TextStyle(fontFamily: "Tajawal", height: 1.5),
+      ),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+// Future<String> countNumOfRequests(String mmId) async {
   //   var requests =
   //   await FirebaseFirestore.instance.collection('requests').get();
   //   var numOfR = 0;
@@ -524,7 +577,7 @@ Widget _buildWaitingScreen() {
     body: Container(
       alignment: Alignment.center,
       child: CircularProgressIndicator(
-        color: const Color(0xdeedd03c),
+        color: colors.main,
       ),
     ),
   );

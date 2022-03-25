@@ -16,6 +16,7 @@ class RequestViewModel {
   late String message;
   late String msgType;
   String? _duration;
+  String? sponsor;
 
   // تنظيم
   DateTime? _startDate, _endDate;
@@ -221,7 +222,7 @@ class RequestViewModel {
     Events request =  Events(_partNum, _participants, daysBetween(_startDate, _endDate),
         _startDate, _endDate, _startTime,
         _endTime, clubID, _title, _description, _club_name,
-        _club_location, _upload_time);
+        _club_location, _upload_time, sponsor);
 
 
     await FirebaseFirestore.instance

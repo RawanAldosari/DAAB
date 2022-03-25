@@ -151,9 +151,9 @@ class _shome extends State<shome> {
                     Row(
                       textDirection: TextDirection.rtl,
                       children: [
-                        Padding(padding: EdgeInsets.only(right: 20)),
+                        Padding(padding: EdgeInsets.only(right: 40)),
                         Text(
-                          'روان',
+                          'روان الدوسري',
                           style: TextStyle(
                             color: colors.darkText,
                             fontWeight: FontWeight.w800,
@@ -194,41 +194,46 @@ class _shome extends State<shome> {
                             icon: Icon(
                               Icons.calendar_today,
                             ),
-                            onPressed: () {
-
-                            },
+                            onPressed: () {},
                           ),
                         ),
                       ),
                       Container(
-                        child:
-                        GestureDetector(
-                          onTap: () async {
-
-                          },
-                          child:
-                          Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-
-
-                            Text(
-                              "25",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: "Tajawal",
-                                  fontSize: 25),
+                            GestureDetector(
+                              onTap: () async {
+                                showAlertDialog();
+                              },
+                              child: Text(
+                                "56",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: "Tajawal",
+                                    fontSize: 25),
+                              ),
                             ),
-                            SizedBox(width: 32),
-                            Text(
-                              'الساعات',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: "Tajawal",
-                                  fontSize: 22),
+                            GestureDetector(
+                              onTap: () async {
+                                showAlertDialog();
+                              },
+                              child: SizedBox(width: 32),
                             ),
+                            GestureDetector(
+                              onTap: () async {
+                                showAlertDialog();
+                              },
+                              child: Text(
+                                'الساعات',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: "Tajawal",
+                                    fontSize: 22),
+                              ),
+                            )
                           ],
-                        ),),
+                        ),
                         padding:
                             EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                         decoration: BoxDecoration(
@@ -331,9 +336,7 @@ class _shome extends State<shome> {
                     margin: const EdgeInsets.only(top: 50.0, bottom: 20),
                     alignment: Alignment.bottomCenter,
                     child: GestureDetector(
-                        onTap: () async {
-
-                        },
+                        onTap: () async {},
                         child: const Text(
                           "الاسئلة الشائعة",
                           style: TextStyle(
@@ -341,13 +344,79 @@ class _shome extends State<shome> {
                               fontSize: 15,
                               decoration: TextDecoration.underline,
                               color: Color(0xff8b8b8b)),
-                        ))
-                )
+                        )))
               ],
             ),
           )
         ],
       ),
+    );
+  }
+
+  showAlertDialog() {
+    Widget cancelButton = Padding(
+        padding: EdgeInsets.only(right: 90.w),
+        child: ElevatedButton(
+          child: const Text(
+            "تم",
+            style: TextStyle(fontFamily: "Tajawal", color: colors.main),
+          ),
+          onPressed: () {
+            Navigator.of(context).pop(context);
+          },
+          style: ButtonStyle(
+              backgroundColor:
+                  MaterialStateProperty.all<Color>(const Color(0xdeffffff)),
+              elevation: MaterialStateProperty.all<double>(0)),
+        ));
+
+    // Widget confirmButton = Padding(
+    //   padding: EdgeInsets.only(right: 40.w, top: 20.h, bottom: 30.h),
+    //   child: ElevatedButton(
+    //     child: Text(
+    //       "تأكيد",
+    //       style: TextStyle(fontFamily: "Tajawal"),
+    //     ),
+    //     style: ButtonStyle(
+    //         backgroundColor:
+    //         MaterialStateProperty.all<Color>(const Color(0xdeedd03c))),
+    //     onPressed: () async {
+    //       Navigator.of(context).pop(context);
+    //       await requestVM.cancelRequest(document);
+    //       Snackbar bar =
+    //       Snackbar(context, requestVM.message, requestVM.msgType);
+    //       bar.showToast();
+    //     },
+    //   ),
+    // );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(32.0))),
+      contentPadding: EdgeInsets.only(right: 20.w, top: 20.h, bottom: 10.h),
+      title: Text(
+        "نجاح",
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontFamily: "Tajawal",
+          color: colors.main,
+        ),
+      ),
+      content: Text(
+        "تم ارسال طلب \n استلام السجل المهاري بنجاح",
+        textAlign: TextAlign.center,
+        style: TextStyle(fontFamily: "Tajawal"),
+      ),
+      actions: [
+        cancelButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }
