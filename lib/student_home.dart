@@ -322,7 +322,7 @@ class _shome extends State<shome> {
                     alignment: Alignment.bottomCenter,
                     child: GestureDetector(
                         onTap: () async {
-                          
+
                         },
                         child: const Text(
                           "الاسئلة الشائعة",
