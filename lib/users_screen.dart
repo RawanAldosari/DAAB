@@ -124,7 +124,7 @@ class _UsersScreenState extends State<UsersScreen> {
               ),
               child: Column(
                 children: [
-                  // Image.asset('images/logo.png'),
+                  Image.asset('images/logo.png'),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.02,
                   ),

@@ -96,9 +96,10 @@ flutter:
      - images/Events.png
      - images/personal_skills.png
      - images/personal_skills_2.png
+     - images/logo.png
 
 
-         # An image asset can refer to one or more resolution-specific "variants", see
+    # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
   # For details regarding adding assets from package dependencies, see
