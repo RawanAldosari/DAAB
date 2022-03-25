@@ -1,12 +1,16 @@
 import 'package:daab/Colors.dart';
+import 'package:daab/clubs_feed.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:swe444/Functions/home_screen/moneyVFeed.dart';
 
 import '../CustomPageRoute.dart';
 import 'package:daab/decision_tree.dart';
+
+import 'events_feed.dart';
 
 class shome extends StatefulWidget {
   @override
@@ -19,7 +23,7 @@ class _shome extends State<shome> {
   var types = [
     Type("الأندية الطلابية", "images/clubs-2.png", 1),
     Type("الفعاليات", "images/Events.png", 2),
-    Type("تطوير المهارات", "images/personal_skills_2.png", 3)
+    // Type("تطوير المهارات", "images/personal_skills_2.png", 3)
   ];
   // @override
   // Widget build(BuildContext context) {
@@ -144,7 +148,6 @@ class _shome extends State<shome> {
                         ),
                       ),
                     ]),
-                    
                     Row(
                       textDirection: TextDirection.rtl,
                       children: [
@@ -228,7 +231,7 @@ class _shome extends State<shome> {
           ),
           Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
               child: Container()
               // SearchBar(),
               ),
@@ -245,13 +248,11 @@ class _shome extends State<shome> {
                     return GestureDetector(
                       onTap: () {
                         if (types[index].num == 1) {
-                          // Navigator.of(context)
-                          //     .push(CustomPageRoute(child:
-                          // moneyVFeed()
-                          // ));
+                          Navigator.of(context)
+                              .push(CustomPageRoute(child: clubsFeed()));
                         } else if (types[index].num == 2) {
-                          // Navigator.of(context)
-                          //     .push(CustomPageRoute(child: itemsVFeed()));
+                          Navigator.of(context)
+                              .push(CustomPageRoute(child: eventsFeed()));
                         } else {
                           // Navigator.of(context)
                           //     .push(CustomPageRoute(child: eventsVFeed()));
@@ -300,7 +301,7 @@ class _shome extends State<shome> {
                                       types[index].type.toString(),
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                        color: Color(0xff334856),
+                                        color: colors.darkText,
                                         fontWeight: FontWeight.w700,
                                         fontFamily: 'Tajawal',
                                         fontSize: 22,
@@ -317,12 +318,21 @@ class _shome extends State<shome> {
                   },
                 ),
                 Container(
-                    margin: const EdgeInsets.only(top: 30.0, bottom: 20),
+                    margin: const EdgeInsets.only(top: 50.0, bottom: 20),
                     alignment: Alignment.bottomCenter,
-                    child: Text(
-                      "نتائج البحث: ",
-                      style: TextStyle(color: Color(0xff8b8b8b)),
-                    ))
+                    child: GestureDetector(
+                        onTap: () async {
+                          
+                        },
+                        child: const Text(
+                          "الاسئلة الشائعة",
+                          style: TextStyle(
+                              fontFamily: 'Tajawal',
+                              fontSize: 15,
+                              decoration: TextDecoration.underline,
+                              color: Color(0xff8b8b8b)),
+                        ))
+                )
               ],
             ),
           )
