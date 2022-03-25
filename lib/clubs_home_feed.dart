@@ -50,6 +50,7 @@ class cHomeFeed extends State<c_feed> with SingleTickerProviderStateMixin {
 
   }
 
+
   @override
   Widget build(BuildContext context) {
     Stream<QuerySnapshot<Map<String, dynamic>>>? requests =
@@ -685,6 +686,74 @@ class cHomeFeed extends State<c_feed> with SingleTickerProviderStateMixin {
   }
 
   showAlertDialog(DocumentSnapshot document) {
+    // RequestViewModel requestVM = RequestViewModel();
+    // // set up the buttons
+    // Widget cancelButton = ElevatedButton(
+    //   child: const Text(
+    //     "إلغاء",
+    //     style: TextStyle(fontFamily: "Tajawal", color: const Color(0xdeedd03c)),
+    //   ),
+    //   onPressed: () {
+    //     Navigator.of(context).pop(context);
+    //   },
+    //   style: ButtonStyle(
+    //       backgroundColor:
+    //       MaterialStateProperty.all<Color>(const Color(0xdeffffff)),
+    //       elevation: MaterialStateProperty.all<double>(0)),
+    // );
+    //
+    // Widget confirmButton = Padding(
+    //   padding: EdgeInsets.only(right: 40.w, top: 20.h, bottom: 30.h),
+    //   child: ElevatedButton(
+    //     child: Text(
+    //       "تأكيد",
+    //       style: TextStyle(fontFamily: "Tajawal"),
+    //     ),
+    //     style: ButtonStyle(
+    //         backgroundColor:
+    //         MaterialStateProperty.all<Color>(const Color(0xdeedd03c))),
+    //     onPressed: () async {
+    //       Navigator.of(context).pop(context);
+    //       await requestVM.cancelRequest(document);
+    //       Snackbar bar =
+    //       Snackbar(context, requestVM.message, requestVM.msgType);
+    //       bar.showToast();
+    //     },
+    //   ),
+    // );
+    // // set up the AlertDialog
+    // AlertDialog alert = AlertDialog(
+    //   shape: RoundedRectangleBorder(
+    //       borderRadius: BorderRadius.all(Radius.circular(32.0))),
+    //   contentPadding: EdgeInsets.only(right: 20.w, top: 20.h, bottom: 10.h),
+    //   title: Text(
+    //     "إلغاء",
+    //     textAlign: TextAlign.right,
+    //     style: TextStyle(
+    //       fontFamily: "Tajawal",
+    //       color: const Color(0xdeedd03c),
+    //     ),
+    //   ),
+    //   content: Text(
+    //     "هل أنت متأكد من رغبتك في\n إلغاء الطلب؟",
+    //     textAlign: TextAlign.right,
+    //     style: TextStyle(fontFamily: "Tajawal"),
+    //   ),
+    //   actions: [
+    //     cancelButton,
+    //     confirmButton,
+    //   ],
+    // );
+    // // show the dialog
+    // showDialog(
+    //   context: context,
+    //   builder: (BuildContext context) {
+    //     return alert;
+    //   },
+    // );
+  }
+
+  showWelocomeDialog(DocumentSnapshot document) {
     // RequestViewModel requestVM = RequestViewModel();
     // // set up the buttons
     // Widget cancelButton = ElevatedButton(

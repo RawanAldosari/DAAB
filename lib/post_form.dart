@@ -1102,7 +1102,7 @@ class _AddRequestFormState extends State<PostRequestForm> {
 
     if (document.exists) {
       Map<String, dynamic>? data = document.data();
-      requestVM.setCName = data?['club_name'];
+      requestVM.setCName = data?['name'];
       requestVM.setCLocation = data?['location'];
       requestVM.setDescription = description.text;
       requestVM.setTitle = title.text;

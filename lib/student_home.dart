@@ -194,14 +194,24 @@ class _shome extends State<shome> {
                             icon: Icon(
                               Icons.calendar_today,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+
+                            },
                           ),
                         ),
                       ),
                       Container(
-                        child: Row(
+                        child:
+                        GestureDetector(
+                          onTap: () async {
+
+                          },
+                          child:
+                          Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
+                          children: [
+
+
                             Text(
                               "25",
                               style: TextStyle(
@@ -218,7 +228,7 @@ class _shome extends State<shome> {
                                   fontSize: 22),
                             ),
                           ],
-                        ),
+                        ),),
                         padding:
                             EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                         decoration: BoxDecoration(

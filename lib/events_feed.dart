@@ -73,7 +73,7 @@ class eFeed extends State<events_feed> {
           ),
         ],
         title: Text(
-          "الأندية الطلابية",
+          "الفعالبات",
           textAlign: TextAlign.center,
           style: TextStyle(
             color: colors.main,
@@ -333,7 +333,7 @@ class eFeed extends State<events_feed> {
                     ),
                   ),
                   Spacer(),
-                  Text(document["location"],
+                  Text(document["college"],
                     style: TextStyle(fontFamily: 'Tajawal'),
                   ),
                   Icon(Icons.location_on, color: colors.second),

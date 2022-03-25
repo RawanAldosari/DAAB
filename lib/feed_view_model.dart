@@ -6,6 +6,8 @@ import 'package:url_launcher/url_launcher.dart';
 class FeedViewModel with ChangeNotifier {
   Stream<QuerySnapshot<Map<String, dynamic>>>? _requests;
   Stream<QuerySnapshot<Map<String, dynamic>>>? _events;
+  User? user = FirebaseAuth.instance.currentUser;
+  Stream<QuerySnapshot<Map<String, dynamic>>>? members;
 
   // late bool? isVSubscribed;
   late List<String> isVSubscribed = [];
@@ -21,13 +23,17 @@ class FeedViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  fetchMembers() async {
+    var firebase = FirebaseFirestore.instance.collection('users');
+    members = firebase.doc(user!.uid).collection("members").snapshots();
+    notifyListeners();
+  }
+
   fetchEvents() async {
     var firebase = FirebaseFirestore.instance.collection('events');
     _events = firebase.orderBy('upload_time', descending: true).snapshots();
     notifyListeners();
   }
-
-
 
   Stream<QuerySnapshot<Map<String, dynamic>>>? get requests {
     return _requests;
@@ -69,7 +75,7 @@ class FeedViewModel with ChangeNotifier {
       while (i.moveNext()) {
         if (i.current["title"].toString().contains(query)) {
           if ((i.current['type'].toString() == "مبلغ" &&
-              i.current['donated'] < i.current['amount']) ||
+                  i.current['donated'] < i.current['amount']) ||
               (i.current['type'].toString() == "موارد" &&
                   i.current['donated'] < i.current['amount_requested']) ||
               (i.current['type'].toString() == "تنظيم" &&
@@ -93,7 +99,7 @@ class FeedViewModel with ChangeNotifier {
       while (i.moveNext()) {
         if (i.current["mosque_name"].toString().contains(query)) {
           if ((i.current['type'].toString() == "مبلغ" &&
-              i.current['donated'] < i.current['amount']) ||
+                  i.current['donated'] < i.current['amount']) ||
               (i.current['type'].toString() == "موارد" &&
                   i.current['donated'] < i.current['amount_requested']) ||
               (i.current['type'].toString() == "تنظيم" &&
@@ -118,7 +124,7 @@ class FeedViewModel with ChangeNotifier {
       while (i.moveNext()) {
         if (i.current["description"].toString().contains(query)) {
           if ((i.current['type'].toString() == "مبلغ" &&
-              i.current['donated'] < i.current['amount']) ||
+                  i.current['donated'] < i.current['amount']) ||
               (i.current['type'].toString() == "موارد" &&
                   i.current['donated'] < i.current['amount_requested']) ||
               (i.current['type'].toString() == "تنظيم" &&
