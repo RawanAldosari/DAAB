@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:daab/Colors.dart';
 import 'package:daab/Widgets/show_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../CustomPageRoute.dart';
+import '../club_home.dart';
 import '../student_home_view.dart';
 import '../users_screen.dart';
-import 'reset_password.dart';
 
 class LoginPage extends StatefulWidget {
   final Function(User) onSignIn;
@@ -19,7 +20,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController _controllerEmail = TextEditingController();
   TextEditingController _controllerPass = TextEditingController();
-  static const kYellow = const Color(0xdeedd03c);
+  static const kYellow = colors.main;
   String? errorMessage1, errorMessage2;
   Snackbar? snackbar, snackbar2, snackbar3;
 
@@ -216,7 +217,8 @@ class _LoginPageState extends State<LoginPage> {
                                 child: Container(
                                     height: 160,
                                     width: 160,
-                                    child: Image.asset('images/logo.png')),
+                                    // child: Image.asset('images/logo.png')
+                                  ),
                               ),
                               Padding(
                                 padding: EdgeInsets.only(left: 0.0, top: 55),
@@ -244,7 +246,7 @@ class _LoginPageState extends State<LoginPage> {
                             textDirection: TextDirection.rtl,
                             child: TextFormField(
                               showCursor: true,
-                              cursorColor: const Color(0xdeedd03c),
+                              cursorColor: colors.main,
                               textAlign: TextAlign.right,
                               controller: _controllerEmail,
                               validator: (value) {
@@ -302,7 +304,7 @@ class _LoginPageState extends State<LoginPage> {
                                 }
                               },
                               showCursor: true,
-                              cursorColor: const Color(0xdeedd03c),
+                              cursorColor: colors.main,
                               textAlign: TextAlign.right,
                               controller: _controllerPass,
                               decoration: InputDecoration(
@@ -313,7 +315,7 @@ class _LoginPageState extends State<LoginPage> {
                                   // width: 0.0 produces a thin "hairline" border
                                   borderRadius: BorderRadius.circular(30),
                                   borderSide: const BorderSide(
-                                    color: Color(0xdeedd03c),
+                                    color: colors.main,
                                   ),
                                 ),
                                 prefixIcon: const Icon(
@@ -342,36 +344,13 @@ class _LoginPageState extends State<LoginPage> {
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.02,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Wrap(
-                                crossAxisAlignment: WrapCrossAlignment.center,
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).push(CustomPageRoute(
-                                      child: ResetPasswordScreen()));
-                                },
-                                child: const Text(
-                                  'هل نسيت كلمة المرور؟',
-                                  style: TextStyle(
-                                    decoration: TextDecoration.underline,
-                                    color: Color(0xff334856),
-                                    fontWeight: FontWeight.w900,
-                                    fontFamily: 'Tajawal',
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.02,
                           ),
                           ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 minimumSize: Size(300, 64),
-                                primary: const Color(0xdeedd03c),
+                                primary: colors.main,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50),
                                 ),

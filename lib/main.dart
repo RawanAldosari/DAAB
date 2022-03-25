@@ -6,6 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'Functions/decision_tree.dart';
 import 'package:get/get.dart';
 
+import 'decision_tree.dart';
+
 
 Future<void> main() async {
 
@@ -25,7 +27,7 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       builder: () => GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        home: sHome(),
+        home: DecisionsTree(),
         theme: ThemeData(fontFamily: 'Tajawal'),
       ),
       designSize: const Size(390, 844),

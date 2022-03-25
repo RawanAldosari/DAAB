@@ -15,6 +15,8 @@ class FeedViewModel with ChangeNotifier {
 
   fetchRequests() async {
     var firebase = FirebaseFirestore.instance.collection('clubSupport');
+    var firebase2 = FirebaseFirestore.instance.collection('events');
+    _events = firebase2.orderBy('upload_time', descending: true).snapshots();
     _requests = firebase.orderBy('upload_time', descending: true).snapshots();
     notifyListeners();
   }

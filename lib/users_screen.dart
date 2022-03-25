@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:daab/Colors.dart';
 import 'package:daab/decision_tree.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -123,7 +124,7 @@ class _UsersScreenState extends State<UsersScreen> {
               ),
               child: Column(
                 children: [
-                  Image.asset('images/logo.png'),
+                  // Image.asset('images/logo.png'),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.02,
                   ),
@@ -182,13 +183,13 @@ class _UsersScreenState extends State<UsersScreen> {
                       style: TextStyle(
                           fontSize: 20.0,
                           fontFamily: 'Tajawal',
-                          color: Color(0xff334856),
+                          color: Colors.white,
                           fontWeight: FontWeight.w700),
                       textAlign: TextAlign.center,
                     ),
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size(300, 64),
-                      primary: kYellow,
+                      primary: colors.main,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50),
                       ),
