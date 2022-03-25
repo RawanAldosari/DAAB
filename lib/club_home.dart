@@ -4,6 +4,7 @@ import 'package:daab/post_form_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'club_structure.dart';
 import 'decision_tree.dart';
 import 'feed_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,7 +23,7 @@ class _HomeState extends State<cHome> {
 
   // nav bar redirection:
   final List<Widget> _children = [
-    profile(),
+    ClubStructureSet(),
     PostRequest(),
     ClubHomeFeed(),
   ];

@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:table_calendar/table_calendar.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:ui' as ui;
 
@@ -33,6 +34,12 @@ class calender_view extends StatefulWidget {
 }
 
 class cView extends State<calender_view> {
+  DateTime? _selectedDay;
+  DateTime? _focusedDay;
+  var _calendarFormat;
+
+
+
   @override
   void initState() {
     super.initState();
@@ -73,7 +80,7 @@ class cView extends State<calender_view> {
           ),
         ],
         title: Text(
-          "الأندية الطلابية",
+          "الجدول",
           textAlign: TextAlign.center,
           style: TextStyle(
             color: colors.main,
@@ -92,260 +99,35 @@ class cView extends State<calender_view> {
           ),
         ),
       ),
-      body: StreamBuilder(
-          stream: requests,
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) return _buildWaitingScreen();
-            return ListView.builder(
-              itemCount: (snapshot.data! as QuerySnapshot).docs.length,
-              itemBuilder: (BuildContext context, int index) => buildCards(
-                  context, (snapshot.data! as QuerySnapshot).docs[index]),
-            );
-          }),
+      body: TableCalendar(
+
+        firstDay: DateTime.utc(2010, 10, 16),
+        lastDay: DateTime.utc(2030, 3, 14),
+        focusedDay: DateTime.now(),
+        selectedDayPredicate: (day) {
+          return isSameDay(_selectedDay, day);
+        },
+        onDaySelected: (selectedDay, focusedDay) {
+          setState(() {
+            _selectedDay = selectedDay;
+            _focusedDay = focusedDay; // update `_focusedDay` here as well
+          });
+
+        },
+        // calendarFormat: _calendarFormat,
+        // onFormatChanged: (format) {
+        //   setState(() {
+        //     _calendarFormat = format;
+        //   });
+        // },
+        calendarStyle: CalendarStyle(
+          canMarkersOverflow: true,
+
+        ),
+      )
     );
   }
 
-  Widget buildCards(BuildContext context, DocumentSnapshot document) {
-    FeedViewModel feedVM = FeedViewModel();
-
-    return Container(
-      padding: const EdgeInsets.only(top: 10.0, left: 12, right: 12),
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(19.0),
-        ),
-        shadowColor: Color(0xff334856),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: 5.0, bottom: 9.0, left: 2, right: 10),
-                child: Row(children: <Widget>[
-                  Container(
-                    width: 100,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 20, top: 5),
-                      child: Text(
-                        document['club_name'],
-                        style: TextStyle(
-                            fontFamily: 'Tajawal',
-                            fontSize: 12,
-                            decoration: TextDecoration.underline),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                  const Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 10, top: 5),
-                    child: Text(
-                      document['title'],
-                      style: TextStyle(fontSize: 16.0, fontFamily: 'Tajawal'),
-                      // textAlign: TextAlign.left,
-                    ),
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: FittedBox(
-                        fit: BoxFit.fill,
-                        child: Icon(Icons.group,
-                          size: 40,
-                          color: colors.darkText,),
-                      )
-
-                  ),
-                ]),
-              ),
-              Padding(
-                padding:
-                const EdgeInsets.only(top: 4.0, bottom: 15.0, right: 70),
-                child: Row(children: <Widget>[
-                  const Spacer(),
-                  Column(
-                    children: [
-                      Container(
-                        width: 250, // to wrap the text in multiline
-                        child: Text(
-                          document['description'],
-                          style: TextStyle(fontFamily: 'Tajawal'),
-                          textDirection: ui.TextDirection
-                              .rtl, // make the text from right to left
-                        ),
-                      ),
-                      //start_date
-                      // Container(
-                      //   width: 250, // to wrap the text in multiline
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.only(top: 10),
-                      //     child: Text(
-                      //       'تاريخ البداية: ' +
-                      //           getTime(document['start_date']),
-                      //       style: TextStyle(fontFamily: 'Tajawal'),
-                      //       textDirection: ui.TextDirection
-                      //           .rtl, // make the text from right to left
-                      //     ),
-                      //   ),
-                      // ),
-                      Container(
-                        width: 250, // to wrap the text in multiline
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: Text(
-                            'المدة: ' + document['duration'].toString(),
-                            style: TextStyle(fontFamily: 'Tajawal'),
-                            textDirection: ui.TextDirection
-                                .rtl, // make the text from right to left
-                          ),
-                        ),
-                      ),
-                      // Container(
-                      //   width: 250, // to wrap the text in multiline
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.only(top: 10),
-                      //     child: Text(
-                      //       'يبدأ في تمام الساعة ' +
-                      //           document['start_time'].toString() +
-                      //           " وينتهي " +
-                      //           document['end_time'].toString(),
-                      //       style: TextStyle(fontFamily: 'Tajawal'),
-                      //       textDirection: ui.TextDirection
-                      //           .rtl, // make the text from right to left
-                      //     ),
-                      //   ),
-                      // ),
-                      // Container(
-                      //   width: 250, // to wrap the text in multiline
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.only(top: 10),
-                      //     child: Directionality(
-                      //       textDirection: ui.TextDirection
-                      //           .rtl, // make the text from right to left,
-                      //       child: Text(
-                      //         'عدد المنظمين المطلوب: ' +
-                      //             document['parts_number'].toString(),
-                      //         style: TextStyle(fontFamily: 'Tajawal'),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-                      // Container(
-                      //   width: 250, // to wrap the text in multiline
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.only(top: 10),
-                      //     child: Text(
-                      //       "عدد المشاركين: ",
-                      //       style: TextStyle(fontFamily: 'Tajawal'),
-                      //       textDirection: ui.TextDirection.rtl,
-                      //     ),
-                      //   ),
-                      // ),
-                      // Row(
-                      //   children: [
-                      //     Padding(
-                      //       padding: const EdgeInsets.only(top: 14.0),
-                      //       child: Text(document['participants'].toString(),
-                      //           textAlign: TextAlign.right,
-                      //           style: TextStyle(
-                      //               fontFamily: 'Tajawal', fontSize: 13)),
-                      //     ),
-                      //     // Padding(
-                      //     //   padding: const EdgeInsets.only(
-                      //     //       top: 10.0, left: 5, right: 5),
-                      //     //   child: SizedBox(
-                      //     //     width: 200,
-                      //     //     height: 10,
-                      //     //     child: Stack(
-                      //     //       fit: StackFit.expand,
-                      //     //       children: [
-                      //     //         ClipRRect(
-                      //     //           borderRadius: BorderRadius.circular(50),
-                      //     //           child: LinearProgressIndicator(
-                      //     //             value: (document['participants'] /
-                      //     //                 document['parts_number']),
-                      //     //             valueColor: AlwaysStoppedAnimation(
-                      //     //                 Color(0xdeedd03c)),
-                      //     //             backgroundColor: Color(0xffededed),
-                      //     //           ),
-                      //     //         ),
-                      //     //         // Center(
-                      //     //         //     child: buildLinearProgress(
-                      //     //         //         (document['participants'] /
-                      //     //         //             document['parts_number']))),
-                      //     //       ],
-                      //     //     ),
-                      //     //   ),
-                      //     // ),
-                      //     // Padding(
-                      //     //   padding: const EdgeInsets.only(top: 14.0),
-                      //     //   child: Text(document['parts_number'].toString(),
-                      //     //       style: TextStyle(
-                      //     //           fontFamily: 'Tajawal', fontSize: 13)),
-                      //     // ),
-                      //   ],
-                      // ),
-                    ],
-                  ),
-                ]),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: 5.0, bottom: 5.0, left: 2, right: 10),
-                child: Row(children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                            color: Color(0xffededed),
-                            spreadRadius: 1,
-                            blurRadius: 10),
-                      ],
-                    ),
-                    height: 30,
-                    width: 70,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        // int? wholePartsNum = document['parts_number'];
-                        // int? currentPartsNum = document['participants'];
-                        // String mName = document['mosque_name'].toString();
-                        // String mmId = document['posted_by'].toString();
-                        String thisDocId = document.id;
-                        String title = document['title'];
-
-                        // await apply(name, mmId, wholePartsNum!,
-                        //     currentPartsNum!, thisDocId, title);
-                      },
-                      child: Text(
-                        "شارك",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontFamily: 'Tajawal',
-                            color: const Color(0xff334856)),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: Size(65.w, 30.h),
-                        primary: colors.second,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Spacer(),
-                  Text(document["college"],
-                    style: TextStyle(fontFamily: 'Tajawal'),
-                  ),
-                  Icon(Icons.location_on, color: colors.second),
-                ]),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-
-  }
 
   // callProfile(String name, String ID) async {
   //   bool flag = await isSubscribed(ID.toString());
