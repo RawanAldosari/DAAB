@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Request {
+class ClubSupport {
   String? clubID;
   // String? type;
   String? description;
@@ -8,83 +8,67 @@ class Request {
   String? club_name;
   String? club_location;
   DateTime? upload_time;
-  String? token;
+  String? duration;
 
-  Request(this.title, this.description,
-      this.club_name, this.club_location, this.upload_time);
+  ClubSupport(this.clubID, this.title, this.description, this.club_name,
+      this.club_location, this.upload_time, this.duration);
+
+  Map<String, dynamic> toJson() => {
+        'clubID': clubID,
+        'title': title,
+        'description': description,
+        'club_name': club_name,
+        'college': club_location,
+        'upload_time': upload_time,
+        'duration': duration,
+      };
 
 // formatting for upload to Firebase when creating the request
 
 }
 
-class FundsRequest extends Request {
-  int? amount;
-  int donated = 0;
+class Applicant {
+  bool accepted;
+  bool confirmed;
+  String name;
+  String uid;
+  DateTime time;
 
-  FundsRequest(
-      {this.amount,
-        required this.donated,
-        String? clubID,
-        String? description,
-        String? title,
-        String? club_name,
-        String? club_location,
-        DateTime? upload_time,
-        String? token})
-      : super(title, clubID, description, club_name, club_location,
-      upload_time, token);
+  Applicant(this.accepted, this.confirmed, this.name, this.uid, this.time );
 
   Map<String, dynamic> toJson() => {
-    'posted_by': clubID,
-    'title': title,
-    'type': type,
-    'description': description,
-    'amount': amount,
-    'donated': donated,
-    'mosque_name': mosque_name,
-    'mosque_location': mosque_location,
-    'uplaod_time': uplaod_time,
-    "token": token,
+    'accepted': accepted,
+    'confirmed': confirmed,
+    'name': name,
+    'uid': uid,
+    'time': time,
   };
+
+// formatting for upload to Firebase when creating the request
+
 }
 
-class ItemsRequest extends Request {
-  // String? item;
-  int? amount;
-  int donated = 0;
+class ApplicantM {
+  bool accepted;
+  String name;
+  String uid;
+  DateTime time;
 
-  ItemsRequest(
-      {
-        // this.item,
-        this.amount,
-        required this.donated,
-        String? posted_by,
-        String? type,
-        String? description,
-        String? title,
-        String? mosque_name,
-        String? mosque_location,
-        DateTime? uplaod_time,
-        String? token})
-      : super(title, type, posted_by, description, mosque_name, mosque_location,
-      uplaod_time, token);
+  ApplicantM(this.accepted, this.name, this.uid, this.time );
 
   Map<String, dynamic> toJson() => {
-    'posted_by': posted_by,
-    'title': title,
-    'type': type,
-    'description': description,
-    // 'item': item,
-    'amount_requested': amount,
-    'donated': donated,
-    'mosque_name': mosque_name,
-    'mosque_location': mosque_location,
-    'uplaod_time': uplaod_time,
-    "token": token,
+    'accepted': accepted,
+    'name': name,
+    'uid': uid,
+    'time': time,
   };
+
+// formatting for upload to Firebase when creating the request
+
 }
 
-class VolnRequest extends Request {
+
+class Events {
   int? number;
   int participants = 0;
   DateTime? startDate;
@@ -92,43 +76,43 @@ class VolnRequest extends Request {
   int days;
   String? startTime;
   String? endTime;
+  String? clubID;
+  // String? type;
+  String? description;
+  String? title;
+  String? club_name;
+  String? club_location;
+  DateTime? upload_time;
 
-
-  VolnRequest(
-      {this.number,
-        required this.participants,
-        required this.days,
-        required this.startDate,
-        required this.endDate,
-        required this.startTime,
-        required this.endTime,
-        String? posted_by,
-        String? type,
-        String? description,
-        String? title,
-        String? mosque_name,
-        String? mosque_location,
-        DateTime? uplaod_time,
-        String? token})
-      : super(title, type, posted_by, description, mosque_name, mosque_location,
-      uplaod_time, token);
+  Events(
+      this.number,
+      this.participants,
+      this.days,
+      this.startDate,
+      this.endDate,
+      this.startTime,
+      this.endTime,
+      this.clubID,
+      this.title,
+      this.description,
+      this.club_name,
+      this.club_location,
+      this.upload_time,
+      );
 
   Map<String, dynamic> toJson() => {
-    'posted_by': posted_by,
-    'title': title,
-    'type': type,
-    'description': description,
-    'days': days,
-    'parts_number': number,
-    'participants': participants,
-    'start_date': startDate,
-    'end_date': endDate,
-    'start_time': startTime,
-    'end_time': endTime,
-    'mosque_name': mosque_name,
-    'mosque_location': mosque_location,
-    'uplaod_time': uplaod_time,
-    "token": token,
-  };
+        'clubID': clubID,
+        'title': title,
+        'description': description,
+        'club_name': club_name,
+        'college': club_location,
+        'upload_time': upload_time,
+        'days': days,
+        'parts_number': number,
+        'participants': participants,
+        'start_date': startDate,
+        'end_date': endDate,
+        'start_time': startTime,
+        'end_time': endTime,
+      };
 }
-

@@ -1,24 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import 'applicant.dart';
 // import 'package:swe444/Models/members.dart';
 // import 'package:swe444/Models/support.dart';
 
 class RequestViewModel {
-  String? _posted_by;
-  String? _type;
-  int? _amount;
-  int _donated = 0;
+  String? clubID;
   String? _description;
   String? _title;
-  String? _mosque_name;
-  String? _mosque_location;
-  DateTime? _uplaod_time;
-  String? _token;
-  int? _requested;
+  String? _club_name;
+  String? _club_location;
+  DateTime? _upload_time;
   late String message;
   late String msgType;
-  int? itemsDonated;
+  String? _duration;
 
   // تنظيم
   DateTime? _startDate, _endDate;
@@ -27,24 +24,18 @@ class RequestViewModel {
   int _participants = 0;
 
   get userDocument {
-    return FirebaseFirestore.instance.collection("users").doc(_posted_by).get();
+    return FirebaseFirestore.instance.collection("users").doc(clubID).get();
   }
 
-  set postedBy(String? value) {
+  set setClubID(String? value) {
     if (value != null) {
-      _posted_by = value;
+      clubID = value;
     }
   }
 
-  set setType(String? value) {
+  set duration(String? value) {
     if (value != null) {
-      _type = value;
-    }
-  }
-
-  set setAmount(int? value) {
-    if (value != null) {
-      _amount = value;
+      _duration = value;
     }
   }
 
@@ -60,35 +51,25 @@ class RequestViewModel {
     }
   }
 
-  set setMName(String? value) {
+  set setCName(String? value) {
     if (value != null) {
-      _mosque_name = value;
+      _club_name = value;
     }
   }
 
-  set setMLocation(String? value) {
+  set setCLocation(String? value) {
     if (value != null) {
-      _mosque_location = value;
+      _club_location = value;
     }
   }
 
   set setUploadTime(DateTime? value) {
     if (value != null) {
-      _uplaod_time = value;
+      _upload_time = value;
     }
   }
 
-  set setDonations(int? value) {
-    if (value != null) {
-      _donated = value;
-    }
-  }
 
-  set setToken(String? value) {
-    if (value != null) {
-      _token = value;
-    }
-  }
 
   // organz requests
   set setPartNum(int? value) {
@@ -135,28 +116,17 @@ class RequestViewModel {
   //   }
   // }
 
-  set setRequested(int? value) {
-    if (value != null) {
-      _requested = value;
-    }
-  }
+  // set setRequested(int? value) {
+  //   if (value != null) {
+  //     _requested = value;
+  //   }
+  // }
 
-  Future<void> add() async {
+  Future<void> addSupport() async {
     String _message = "";
     String _msgtype = "";
 
-    if (_type == "مبلغ") {
-      FundsRequest request = FundsRequest(
-          amount: _amount,
-          donated: _donated,
-          type: _type,
-          posted_by: _posted_by,
-          description: _description,
-          mosque_name: _mosque_name,
-          mosque_location: _mosque_location,
-          title: _title,
-          uplaod_time: _uplaod_time,
-          token: _token);
+      ClubSupport request = ClubSupport(clubID, _title, _description, _club_name, _club_location, _upload_time, _duration);
 
       await FirebaseFirestore.instance
           .collection('requests')
@@ -165,28 +135,77 @@ class RequestViewModel {
       {_message = 'تمت إضافة الطلب بنجاح', _msgtype = "success"})
           .catchError((error) =>
       {_message = " فشل في إضافة الطلب:" + error, _msgtype = "fail"});
-    } else if (_type == "موارد") {
-      ItemsRequest request = ItemsRequest(
-        // item: _item,
-          type: _type,
-          donated: _donated,
-          amount: _requested,
-          posted_by: _posted_by,
-          description: _description,
-          mosque_name: _mosque_name,
-          mosque_location: _mosque_location,
-          title: _title,
-          uplaod_time: _uplaod_time,
-          token: _token);
 
-      await FirebaseFirestore.instance
-          .collection('requests')
-          .add(request.toJson())
-          .then((value) =>
-      {_message = 'تمت إضافة الطلب بنجاح', _msgtype = "success"})
-          .catchError((error) =>
-      {_message = " فشل في إضافة الطلب:" + error, _msgtype = "fail"});
-    } else if (_type == "تنظيم") {
+    // else if (_type == "موارد") {
+    //   ItemsRequest request = ItemsRequest(
+    //     // item: _item,
+    //       type: _type,
+    //       donated: _donated,
+    //       amount: _requested,
+    //       posted_by: _posted_by,
+    //       description: _description,
+    //       mosque_name: _mosque_name,
+    //       mosque_location: _mosque_location,
+    //       title: _title,
+    //       uplaod_time: _uplaod_time,
+    //       token: _token);
+    //
+    //   await FirebaseFirestore.instance
+    //       .collection('requests')
+    //       .add(request.toJson())
+    //       .then((value) =>
+    //   {_message = 'تمت إضافة الطلب بنجاح', _msgtype = "success"})
+    //       .catchError((error) =>
+    //   {_message = " فشل في إضافة الطلب:" + error, _msgtype = "fail"});
+    // } else if (_type == "تنظيم") {
+    //   // final now = new DateTime.now();
+    //   // DateTime _startTime2= new DateTime(now.year, now.month, now.day, _startTime!.hour, _startTime!.minute);
+    //   // final shours = _startTime!.hour.toString().padLeft(2, '0');
+    //   // final sminutes = _startTime!.minute.toString().padLeft(2, '0');
+    //   //
+    //   // String _startTimes = '$shours:$sminutes';
+    //   //
+    //   // final ehours = _startTime!.hour.toString().padLeft(2, '0');
+    //   // final eminutes = _startTime!.minute.toString().padLeft(2, '0');
+    //   //
+    //   // String _endTimes = '$ehours:$eminutes';
+    //
+    //   VolnRequest request = VolnRequest(
+    //       type: _type,
+    //       number: _partNum,
+    //       participants: _participants,
+    //       days: daysBetween(_startDate, _endDate),
+    //       startDate: _startDate,
+    //       endDate: _endDate,
+    //       startTime: _startTime,
+    //       endTime: _endTime,
+    //       posted_by: _posted_by,
+    //       description: _description,
+    //       mosque_name: _mosque_name,
+    //       mosque_location: _mosque_location,
+    //       title: _title,
+    //       uplaod_time: _uplaod_time,
+    //       token: _token);
+    //
+    //   await FirebaseFirestore.instance
+    //       .collection('requests')
+    //       .add(request.toJson())
+    //       .then((value) =>
+    //   {_message = 'تمت إضافة الطلب بنجاح', _msgtype = "success"})
+    //       .catchError((error) => {
+    //     _message = " فشل في إضافة الطلب:" + error.toString(),
+    //     _msgtype = "fail"
+    //   });
+    // }
+
+    message = _message;
+    msgType = _msgtype;
+  }
+
+  Future<void> addEvent() async {
+    String _message = "";
+    String _msgtype = "";
+
       // final now = new DateTime.now();
       // DateTime _startTime2= new DateTime(now.year, now.month, now.day, _startTime!.hour, _startTime!.minute);
       // final shours = _startTime!.hour.toString().padLeft(2, '0');
@@ -199,25 +218,14 @@ class RequestViewModel {
       //
       // String _endTimes = '$ehours:$eminutes';
 
-      VolnRequest request = VolnRequest(
-          type: _type,
-          number: _partNum,
-          participants: _participants,
-          days: daysBetween(_startDate, _endDate),
-          startDate: _startDate,
-          endDate: _endDate,
-          startTime: _startTime,
-          endTime: _endTime,
-          posted_by: _posted_by,
-          description: _description,
-          mosque_name: _mosque_name,
-          mosque_location: _mosque_location,
-          title: _title,
-          uplaod_time: _uplaod_time,
-          token: _token);
+    Events request =  Events(_partNum, _participants, daysBetween(_startDate, _endDate),
+        _startDate, _endDate, _startTime,
+        _endTime, clubID, _title, _description, _club_name,
+        _club_location, _upload_time);
 
-      await FirebaseFirestore.instance
-          .collection('requests')
+
+    await FirebaseFirestore.instance
+          .collection('events')
           .add(request.toJson())
           .then((value) =>
       {_message = 'تمت إضافة الطلب بنجاح', _msgtype = "success"})
@@ -225,11 +233,12 @@ class RequestViewModel {
         _message = " فشل في إضافة الطلب:" + error.toString(),
         _msgtype = "fail"
       });
-    }
+
 
     message = _message;
     msgType = _msgtype;
   }
+
 
 
 
@@ -277,61 +286,61 @@ class RequestViewModel {
   //   msgType = _msgtype;
   // }
 
-  Future applyAsMember(
-      DocumentSnapshot document, String amount, User user) async {
-    String _message = "";
-    String _msgtype = "";
-    int? items = int.parse(amount);
-    if (user != null) {
-      var userDoc = await FirebaseFirestore.instance
-          .collection("users")
-          .doc(user.uid.toString())
-          .get();
-      String firstName = userDoc['first_name'].toString().trim();
-      String lastName = userDoc['last_name'].toString().trim();
-
-      Applicant application = new Applicant("unconfirmed", firstName + " " + lastName,user.uid.toString(),DateTime.now());
-
-      ItemsRequest request = ItemsRequest(
-          type: document['type'],
-          donated: int.parse(document['donated'].toString()) + items,
-          amount: int.parse(document['amount_requested'].toString()),
-          posted_by: document['posted_by'],
-          description: document['description'],
-          mosque_name: document['mosque_name'],
-          mosque_location: document['mosque_location'],
-          title: document['title'],
-          uplaod_time: (document['uplaod_time'] as Timestamp).toDate(),
-          token: document['token']);
-
-      await FirebaseFirestore.instance
-          .collection('requests')
-          .doc(document.id)
-          .collection('donations')
-          .add(donation.toJson())
-          .then((value) async => {
-        await FirebaseFirestore.instance
-            .collection('requests')
-            .doc(document.id)
-            .set(request.toJson())
-            .then((value) => {
-          _message = 'تم تسجيل التبرع بنجاح',
-          _msgtype = "success"
-        })
-            .catchError((error) => {
-          _message = " فشل في تسجيل التبرع" + error,
-          _msgtype = "fail"
-        }),
-      })
-          .catchError((error) => {
-        _message = " فشل في تسجيل التبرع" + error,
-        _msgtype = "fail",
-      });
-
-      message = _message;
-      msgType = _msgtype;
-    }
-  }
+  // Future applyAsMember(
+  //     DocumentSnapshot document, String amount, User user) async {
+  //   String _message = "";
+  //   String _msgtype = "";
+  //   int? items = int.parse(amount);
+  //   if (user != null) {
+  //     var userDoc = await FirebaseFirestore.instance
+  //         .collection("users")
+  //         .doc(user.uid.toString())
+  //         .get();
+  //     String firstName = userDoc['first_name'].toString().trim();
+  //     String lastName = userDoc['last_name'].toString().trim();
+  //
+  //     Applicant application = new Applicant("unconfirmed", firstName + " " + lastName,user.uid.toString(),DateTime.now());
+  //
+  //     ItemsRequest request = ItemsRequest(
+  //         type: document['type'],
+  //         donated: int.parse(document['donated'].toString()) + items,
+  //         amount: int.parse(document['amount_requested'].toString()),
+  //         posted_by: document['posted_by'],
+  //         description: document['description'],
+  //         mosque_name: document['mosque_name'],
+  //         mosque_location: document['mosque_location'],
+  //         title: document['title'],
+  //         uplaod_time: (document['uplaod_time'] as Timestamp).toDate(),
+  //         token: document['token']);
+  //
+  //     await FirebaseFirestore.instance
+  //         .collection('requests')
+  //         .doc(document.id)
+  //         .collection('donations')
+  //         .add(donation.toJson())
+  //         .then((value) async => {
+  //       await FirebaseFirestore.instance
+  //           .collection('requests')
+  //           .doc(document.id)
+  //           .set(request.toJson())
+  //           .then((value) => {
+  //         _message = 'تم تسجيل التبرع بنجاح',
+  //         _msgtype = "success"
+  //       })
+  //           .catchError((error) => {
+  //         _message = " فشل في تسجيل التبرع" + error,
+  //         _msgtype = "fail"
+  //       }),
+  //     })
+  //         .catchError((error) => {
+  //       _message = " فشل في تسجيل التبرع" + error,
+  //       _msgtype = "fail",
+  //     });
+  //
+  //     message = _message;
+  //     msgType = _msgtype;
+  //   }
+  // }
 
   // Future cancelRequest(DocumentSnapshot document) async {
   //   String _message = "";
