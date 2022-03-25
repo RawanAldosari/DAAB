@@ -42,20 +42,20 @@ class _HomeState extends State<sHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color(0xfff1f1f1),
+        backgroundColor: colors.second,
         appBar: AppBar(
           centerTitle: true,
           automaticallyImplyLeading: false,
-          title: Text(
-            _title,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: colors.main,
-              fontWeight: FontWeight.w700,
-              fontFamily: 'Tajawal',
-              fontSize: 24,
-            ),
-          ),
+          // title: Text(
+          //   _title,
+          //   textAlign: TextAlign.center,
+          //   style: TextStyle(
+          //     color: colors.main,
+          //     fontWeight: FontWeight.w700,
+          //     fontFamily: 'Tajawal',
+          //     fontSize: 24,
+          //   ),
+          // ),
           elevation: 0,
           leading: IconButton(
             onPressed: () async {
