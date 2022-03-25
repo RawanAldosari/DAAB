@@ -129,7 +129,7 @@ class RequestViewModel {
       ClubSupport request = ClubSupport(clubID, _title, _description, _club_name, _club_location, _upload_time, _duration);
 
       await FirebaseFirestore.instance
-          .collection('requests')
+          .collection('clubSupport')
           .add(request.toJson())
           .then((value) =>
       {_message = 'تمت إضافة الطلب بنجاح', _msgtype = "success"})

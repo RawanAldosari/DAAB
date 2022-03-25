@@ -1,5 +1,6 @@
 import 'package:daab/Colors.dart';
 import 'package:daab/clubs_home_feed.dart';
+import 'package:daab/post_form_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +23,7 @@ class _HomeState extends State<cHome> {
   // nav bar redirection:
   final List<Widget> _children = [
     profile(),
-    profile2(),
+    PostRequest(),
     ClubHomeFeed(),
   ];
 
